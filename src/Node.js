@@ -2,12 +2,22 @@
 /**
  * Binary Search Tree Implementation
  */
+
+
+
 class Node {
+  // config
+  static ROOT_POS = { x: window.width / 2, y: 16 }
+  static NODE_HORIZONTAL_DISTANCE = 20
+  static NODE_VERTICAL_DISTANCE = 20
+
   constructor(data) {
     this.root = null;
     this.data = data;
     this.left = null;
     this.right = null;
+    this.x = null
+    this.y = null
   }
 
   /**
@@ -17,10 +27,31 @@ class Node {
     let newNode = new Node(data);
     if (this.root === null) {
       this.root = newNode;
+
+      // init node position on canvas
+      this.root.x = width / 2     // width is canvas width
+      // this.root.x = Node.ROOT_POS.x 
+      this.root.y = Node.ROOT_POS.y
     } else {
-      this.insertNode(this.root, newNode); // find the correct position in the tree and add the node
+      this.insertNode(this.root, newNode); // find the correct position in the tree and add the node'
     }
   } // insert
+
+  /**
+   * SET NEW NODE's coordinates
+   */
+  setNewNodePos(newNode, flag) {
+    if (flag === 'left') {
+      newNode.x = this.x - Node.NODE_HORIZONTAL_DISTANCE
+      newNode.y = this.y + Node.NODE_VERTICAL_DISTANCE
+    }
+    else if (flag === 'right') {
+      newNode.x = this.x + Node.NODE_HORIZONTAL_DISTANCE
+      newNode.y = this.y + Node.NODE_VERTICAL_DISTANCE
+    } else {
+      console.error('setNewNodePos() wrong flag')
+    }
+  }
 
   /*
     INSERT NODE
@@ -28,12 +59,14 @@ class Node {
   insertNode(node, newNode) {
     if (newNode.data < node.data) {
       if (node.left === null) {
+        node.setNewNodePos(newNode, 'left')
         node.left = newNode;
       } else {
         this.insertNode(node.left, newNode);
       }
     } else {
       if (node.right === null) {
+        node.setNewNodePos(newNode, 'right')
         node.right = newNode;
       } else {
         this.insertNode(node.right, newNode);
@@ -99,26 +132,46 @@ class Node {
   traverse() {
     console.log('===> traverse(): ', this);
     if (this.root) {
-      this.root.visit();
+      this.root.visit(this.root);
     } else if (this.left) {
-      this.left.visit();
+      this.left.visit(this.root);
     } else if (this.right) {
-      this.right.visit;
+      this.right.visit(this.root);
     } else {
-      this.visit();
+      this.visit(this.root);
     }
   }
 
   /**
    * VISIT
    */
-  visit() {
+  visit(parent) {
     if (this.left !== null) {
-      this.left.visit();
+      this.left.visit(this);
     }
-    console.log('===> Visiting: ', this.data);
+    console.log('===> Visiting: ', this.data, this.x, this.y);
+
+    // DRAW TREE
+    
+    // Lines
+    stroke(255)
+    line(parent.x, parent.y, this.x, this.y)
+
+    // circle
+    // noFill()
+    fill('white')
+    ellipse(this.x, this.y, 20, 20)
+
+    // Text  
+    fill('red')
+    noStroke()
+    textAlign(CENTER, CENTER)
+    textStyle(BOLD);
+    text(this.data, this.x, this.y)
+
+
     if (this.right !== null) {
-      this.right.visit();
+      this.right.visit(this);
     }
   }
 

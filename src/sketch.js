@@ -2,12 +2,14 @@
  * P5
  */
 
-console.log('===> sketch.js', new Node('test'));
 
-let bst = new Node();
 function setup() {
-  createCanvas(400, 400);
-
+  
+  createCanvas(400, 500);
+  // background('black') 
+  background(31)
+  
+  let bst = new Node();
   bst.insert(5);
   bst.insert(3);
   bst.insert(7);
@@ -18,7 +20,7 @@ function setup() {
 
   bst.traverse();
 
-  console.log('===>   bst', bst.search(15));
+  // console.log('===>   bst', bst.search(15));
 
   // generateRandNodes(20);
 }
@@ -34,8 +36,8 @@ function generateRandNodes(numOfNodes) {
 }
 
 function draw() {
-  background(220);
-  ellipse(50, 50, 80, 80);
+  // background(220);
+  // ellipse(50, 50, 80, 80);
 }
 
 // function setup() {
