@@ -38,7 +38,6 @@ class Node {
       this.root = newNode; 
       // init node position on canvas
       this.root.x = width / 2     // width is canvas width
-      // this.root.x = Node.ROOT_POS.x 
       this.root.y = Node.ROOT_POS.y
     } else {
       this.insertNode(this.root, newNode); // find the correct position in the tree and add the node'
