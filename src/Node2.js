@@ -3,9 +3,7 @@ class Node {
     this.val = val;
     this.left = null;
     this.right = null;
-    this.random = null;
-    this.x = null
-    this.y = null
+    this.random = null; 
   }
   insert(val){
     let node = new Node(val);
