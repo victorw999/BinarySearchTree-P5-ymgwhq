@@ -7,17 +7,26 @@
 
 class Node {
   // config
-  static ROOT_POS = { x: window.width / 2, y: 16 }
-  static NODE_HORIZONTAL_DISTANCE = 20
-  static NODE_VERTICAL_DISTANCE = 20
+  static ROOT_POS = { x: window.width / 2, y: 40 }
+  static NODE_HORIZONTAL_DISTANCE = 40
+  static NODE_VERTICAL_DISTANCE = 40
+  static NODE_SIZE = 40
 
+  
+  /**
+   * In this tree structure, only the very first Node object 
+   * has its 'root' property pointing to the 
+   * actual root of the tree. 
+   * All other Nodes have their 'root' properties set to null.
+   */
   constructor(data) {
-    this.root = null;
+    this.root = null;   // 
     this.data = data;
     this.left = null;
     this.right = null;
     this.x = null
     this.y = null
+    
   }
 
   /**
@@ -26,8 +35,7 @@ class Node {
   insert(data) {
     let newNode = new Node(data);
     if (this.root === null) {
-      this.root = newNode;
-
+      this.root = newNode; 
       // init node position on canvas
       this.root.x = width / 2     // width is canvas width
       // this.root.x = Node.ROOT_POS.x 
@@ -55,6 +63,7 @@ class Node {
 
   /*
     INSERT NODE
+    insertNode(originNode, newNode)
   */
   insertNode(node, newNode) {
     if (newNode.data < node.data) {
@@ -130,16 +139,13 @@ class Node {
    */
 
   traverse() {
-    console.log('===> traverse(): ', this);
+    console.log('===> traverse(): ', this); 
     if (this.root) {
-      this.root.visit(this.root);
-    } else if (this.left) {
-      this.left.visit(this.root);
-    } else if (this.right) {
-      this.right.visit(this.root);
-    } else {
-      this.visit(this.root);
+      this.root.visit(this.root); 
+    }  else {
+      console.log('===> traverse(): no Nodes in this tree',  );     
     }
+    
   }
 
   /**
@@ -160,14 +166,14 @@ class Node {
     // circle
     // noFill()
     fill('white')
-    ellipse(this.x, this.y, 20, 20)
+    ellipse(this.x, this.y, Node.NODE_SIZE, Node.NODE_SIZE)
 
     // Text  
     fill('red')
     noStroke()
     textAlign(CENTER, CENTER)
     textStyle(BOLD);
-    text(this.data, this.x, this.y)
+    text(this.data, this.x, this.y) 
 
 
     if (this.right !== null) {

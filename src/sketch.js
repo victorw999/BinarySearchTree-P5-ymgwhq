@@ -20,6 +20,9 @@ function setup() {
 
   bst.traverse();
 
+  let bst2 = new Node();
+  bst2.traverse()
+  
   // console.log('===>   bst', bst.search(15));
 
   // generateRandNodes(20);
